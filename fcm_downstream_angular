@@ -1,0 +1,33 @@
+$http({
+	dataType	: "jsonp",
+	url		: "http://fcm.googleapis.com/fcm/send",
+	method		: "POST",
+	headers		: {
+              "Content-Type":"application/json",
+              "Autherization":"key=<your server key>" // your server key	
+              }
+	data: JSON.stringify(
+          {
+            "notification":{
+              "title":"<any title>",  
+              "body": "<any message>", 
+              "sound": "default", //If you want notification sound
+              
+              
+            },
+          // This is payload data 
+            "data":{  
+              "param1":"value1",  //Any data to be retrieved in the notification callback
+              "param2": $scope.formData.message
+            },
+            "to":"/topics/all", //Topic or single device
+            "priority":"high", //If not set, notification won't be delivered on completely closed iOS app
+            "restricted_package_name":"" //Optional. Set for application filtering
+          }
+        )
+    }).success(function(data){
+      alert("Success: " + JSON.stringify(data));
+    }).error(function(data){
+      alert("Error: " + JSON.stringify(data));
+    });	
+});
